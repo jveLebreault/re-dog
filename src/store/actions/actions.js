@@ -24,6 +24,7 @@ export function fetchBreedList(){
         return fetch(`${DOG_API_URL}breeds`, HEADERS)
         .then(response => response.json(), errorLogger)
         .then(json => dispatch(receiveBreedList(json)))
+        .then(() => dispatch(fetchImagesForCurrentPage(json,)))
     }
 }
 
