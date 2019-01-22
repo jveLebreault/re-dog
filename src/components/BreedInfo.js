@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Heading } from 'grommet';
+import { Card, CardAreaMain, CardHeaderPrimary, CardContent, Tag } from 'reactackle'
 
 
 export default class BreedInfo extends React.Component {
@@ -9,10 +9,9 @@ export default class BreedInfo extends React.Component {
         const { breedInfo } = this.props;
         return (
             <div>
-                <Heading level="4">{breedInfo.name}</Heading>
-                <p>
-                    <a href="google.com" target="_blank">Hola</a>
-                </p>
+                <h3>{breedInfo.name}</h3>
+                <strong>Bred for:</strong> {breedInfo['bred_for']} <br/>
+                <strong>Temperament:</strong> {breedInfo.temperament.split(',').map(trait => <Tag text={trait}/>)}
             </div>
         );
     }

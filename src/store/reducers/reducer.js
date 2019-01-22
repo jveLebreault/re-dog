@@ -28,19 +28,6 @@ export default function rootReducer(state = initialState, action) {
                 isRequestPending: false
             });
         
-        case FETCH_BREED_IMAGE:
-            return Object.assign({}, state, {
-                isRequestPending: true
-            });
-        
-        case RECEIVE_BREED_IMAGE:
-            return Object.assign({}, state, {
-                breedList: state.breedList.slice(0, action.breedIndex).concat([{
-                    ...state.breedList[state.breedIndex],
-                    imageUrl: action.image_url
-                }]).concat(action.breedIndex + 1)
-            });
-        
         default:
             return state;
     };

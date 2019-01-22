@@ -1,6 +1,6 @@
 import React from 'react';
 import BreedInfo from './BreedInfo';
-import { Box, Grid } from 'grommet';
+import { Row, Column } from 'reactackle';
 import { connect } from 'react-redux';
 import { 
     fetchBreedList, 
@@ -59,15 +59,15 @@ class BreedList extends React.Component {
 
     render() {
         return (
-            <Grid columns="small" rows="small" gap="small" margin={margin}>
+            <Row layoutDirection="horizontal" wrapContent={true}>
                 {this.getCurrentSlice().map(breed => 
                     (
-                        <Box key={breed.id} elevation="small" pad="xsmall">
+                        <Column key={breed.id} size={{ xsmall: 4 }}>
                             <BreedInfo breedInfo={breed}/>
-                        </Box>
+                        </Column>
                      )
                 )}
-            </Grid>
+            </Row>
         );
     }
 }

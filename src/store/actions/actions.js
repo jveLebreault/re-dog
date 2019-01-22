@@ -10,16 +10,20 @@ const errorLogger = (error) => console.log(error)
 
 const DOG_API_URL = 'https://api.TheDogAPI.com/v1/';
 
-const DOG_CEO_API = '';
-
 
 export const FETCH_BREED_LIST_REQUEST = 'FETCH_BREED_LIST_REQUEST';
 
 export function fetchBreedList(){
-    return function (dispatch) {
-        return fetch(`${DOG_API_URL}breeds`, HEADERS).then(response => response.json(), errorLogger)
+    return function (dispatch, getState) {
+        // const {currentPage, itemCount} = getState()
+        // return new Promise( (resolve, reject) => {
+        //     fetch(`${DOG_API_URL}breeds`, HEADERS)
+        //     .then(response => response.json(), errorLogger)
+        //     .then(json => )
+        // });
+        return fetch(`${DOG_API_URL}breeds`, HEADERS)
+        .then(response => response.json(), errorLogger)
         .then(json => dispatch(receiveBreedList(json)))
-        .then(() => console.log('AFTER: FETCH+BREEDLIST'))
     }
 }
 
@@ -55,6 +59,19 @@ export function receiveBreedImage(json) {
         type: RECEIVE_BREED_IMAGE,
         image_url: json.url,
         breedId: json[0].breeds[0].id,
+    }
+}
+
+export const FETCH_IMAGES_FOR_CURRENT_PAGE = 'FETCH_IMAGES_FOR_CURRENT_PAGE';
+
+export function fetchImagesForCurrentPage(breedList, currentPage, itemCount) {
+    let startIndex = currentPage * itemCount;
+    const endIndex = (currentPage + 1) * itemCount;
+
+    const promiseList = [];
+
+    for (startIndex; startIndex < endIndex; startIndex++) {
+
     }
 }
 
