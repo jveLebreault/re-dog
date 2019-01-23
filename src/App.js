@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import BreedList from './components/BreedList';
+import NavMenu from './components/NavMenu';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import { Container } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import 'typeface-roboto';
-import { 
-    App as MainContainer, 
-    TopRegion, 
-    MainRegion, 
-    BottomRegion,
-    Container,
-    Content
-} from 'reactackle';
 
 
 class App extends Component {
@@ -20,23 +15,10 @@ class App extends Component {
 
     return (
         <Provider store={store}>
-            <MainContainer>
-                <TopRegion>
-                    Top Region
-                </TopRegion>
-
-                <MainRegion>
-                    <Content>
-                        <Container boxed>
-                            <BreedList/>
-                        </Container>
-                    </Content>
-                </MainRegion>
-
-                <BottomRegion>
-                    Bottom Region
-                </BottomRegion>
-            </MainContainer>
+            <NavMenu/>
+            <Container>
+                <BreedList/>
+            </Container>
         </Provider>
     );
   }

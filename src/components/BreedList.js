@@ -1,7 +1,7 @@
 import React from 'react';
 import BreedInfo from './BreedInfo';
-import { Row, Column } from 'reactackle';
 import { connect } from 'react-redux';
+import { Row, Col } from 'reactstrap';
 import { 
     fetchBreedList, 
     fetchBreedImage 
@@ -59,12 +59,12 @@ class BreedList extends React.Component {
 
     render() {
         return (
-            <Row layoutDirection="horizontal" wrapContent={true}>
+            <Row>
                 {this.getCurrentSlice().map(breed => 
                     (
-                        <Column key={breed.id} size={{ xsmall: 4 }}>
+                        <Col key={breed.id} xs="3">
                             <BreedInfo breedInfo={breed}/>
-                        </Column>
+                        </Col>
                      )
                 )}
             </Row>
