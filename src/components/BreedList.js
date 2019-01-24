@@ -23,19 +23,8 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-const margin = {
-    vertical: '1.5%',
-    horizontal: '15%'
-}
 
 class BreedList extends React.Component {
-
-    // constructor(props) {
-    //     super(props)
-
-    //     this.getCurrentSlice = this.getCurrentSlice.bind(this);
-    //     this.getImages = this.getImages.bind(this);
-    // }
 
     componentDidMount() {
         this.props.fetchBreeds();
@@ -44,16 +33,6 @@ class BreedList extends React.Component {
     getCurrentSlice() {
         const { currentPage, itemCount } = this.props
         return this.props.breedList.slice(currentPage * itemCount, (currentPage + 1) * itemCount);
-    }
-
-    getImages() {
-        
-        const currentBreedPage = this.getCurrentSlice();
-        for (let i = 0; i < currentBreedPage.length; i++) {
-            if (!currentBreedPage[i].imageUrl) {
-                this.props.fetchBreedImage(i,currentBreedPage[i].id);
-            }
-        }
     }
 
 
