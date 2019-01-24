@@ -3,8 +3,8 @@
 import {
     FETCH_BREED_LIST_REQUEST,
     RECEIVE_BREED_LIST,
-    FETCH_BREED_IMAGE,
-    RECEIVE_BREED_IMAGE
+    CHANGE_CURRENT_PAGE,
+    CHANGE_ITEM_COUNT
 } from '../actions/actions';
 
 const initialState = {
@@ -26,6 +26,16 @@ export default function rootReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 breedList: action.breedList,
                 isRequestPending: false
+            });
+        
+        case CHANGE_CURRENT_PAGE:
+            return Object.assign({}, state, {
+                currentPage: action.currentPage
+            });
+
+        case CHANGE_ITEM_COUNT:
+            return Object.assign({}, state, {
+                itemCount: state.itemCount
             });
         
         default:

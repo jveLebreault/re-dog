@@ -4,8 +4,17 @@
 
 .navbar {
     margin-bottom: 1%;
+    background-color: #33a1ff;
+}
+
+.navbar-brand {
+    color: white;
 }
 
 .badge {
     margin: auto 2px;
+}
+
+.item-count-input.form-control {
+    width: 120px;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import placeholder from './images/dog-placeholder.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
     Badge,
     Card, 
@@ -11,9 +12,6 @@ import {
     CardSubtitle, 
 } from 'reactstrap';
 
-const imgStyles = {
-    margin: '0 auto'
-}
 
 export default class BreedInfo extends React.Component {
 

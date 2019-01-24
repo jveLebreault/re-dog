@@ -1,25 +1,29 @@
 import React from 'react';
 import BreedInfo from './BreedInfo';
+import Paginator from './Paginator';
 import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
 import { 
     fetchBreedList, 
-    fetchBreedImage 
+    changeCurrentPage,
+    changeItemCount
 } from '../store/actions/actions';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, {location}) => {
     return {
         breedList: state.breedList,
         isRequestPending: state.isRequestPending,
         itemCount: state.itemCount,
-        currentPage: state.currentPage
+        currentPage: state.currentPage,
+        location
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchBreeds: () => dispatch(fetchBreedList()),
-        fetchBreedImage: (breedIndex, breedId, limit = 1) => dispatch(fetchBreedImage(breedIndex, breedId, limit))
+        changePage: (toPage) => dispatch(changeCurrentPage(toPage)),
+        changeItemCount: (itemCount) => dispatch(changeItemCount(itemCount))
     }
 }
 
@@ -37,16 +41,25 @@ class BreedList extends React.Component {
 
 
     render() {
+        console.log('THESE PROPS', this.props.location);
         return (
-            <Row>
-                {this.getCurrentSlice().map(breed => 
-                    (
-                        <Col key={breed.id} xs="3">
-                            <BreedInfo breedInfo={breed}/>
-                        </Col>
-                     )
-                )}
-            </Row>
+            <React.Fragment>
+                <Row>
+                    {this.getCurrentSlice().map(breed => 
+                        (
+                            <Col key={breed.id} xs="3">
+                                <BreedInfo breedInfo={breed}/>
+                            </Col>
+                        )
+                    )}
+                </Row>
+
+                <Row>
+                    <Col xs={{size: 5, offset: 5}}>
+                        <Paginator pageSize={this.props.itemCount}/>
+                    </Col>
+                </Row>
+            </React.Fragment>
         );
     }
 }

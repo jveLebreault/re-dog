@@ -36,27 +36,21 @@ export function receiveBreedList(json) {
 }
 
 
-export const FETCH_BREED_IMAGE = 'FETCH_BREED_IMAGE';
+export const CHANGE_CURRENT_PAGE = 'CHANGE_CURRENT_PAGE';
 
-export function fetchBreedImage(breedId, limit = 1){
-    const encodedBreed = encodeURIComponent(breedId);
-    const encodedLimit = encodeURIComponent(limit);
-
-    return function (dispatch) {
-        return fetch(`${DOG_API_URL}images/search?breed_id=${encodedBreed}&limit=${encodedLimit}`, HEADERS)
-        .then(response => response.json(), errorLogger)
-        .then(json => dispatch(receiveBreedImage(json)))
+export function changeCurrentPage(currentPage = 0) {
+    return {
+        type: CHANGE_CURRENT_PAGE,
+        currentPage
     }
 }
 
-export const RECEIVE_BREED_IMAGE = 'RECEIVE_BREED_IMAGE';
+export const CHANGE_ITEM_COUNT = 'CHANGE_ITEM_COUNT';
 
-export function receiveBreedImage(json) {
-    console.log('JSON:BREEDINDEX', json[0])
+export function changeItemCount(itemCount = 20) {
     return {
-        type: RECEIVE_BREED_IMAGE,
-        image_url: json.url,
-        breedId: json[0].breeds[0].id,
+        type: CHANGE_ITEM_COUNT,
+        itemCount
     }
 }
 
@@ -79,7 +73,6 @@ export function fetchImagesForCurrentPage(breedList, currentPage, itemCount) {
                 for (let i = startIndex, j = 0; i < endIndex; i++, j++) {
                     if (breedImages[j].length && !breedList[i].url) {
                         breedList[i].image_url = breedImages[j][0].url
-                        // console.log(breedImages[j], breedList[i])
                     }
                 }
                 return breedList
