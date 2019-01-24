@@ -26,7 +26,7 @@ export default class Paginator extends React.Component {
                 </PaginationItem>
                 <PaginationItem>
                     <InputGroup >
-                        <Input className="item-count-input" type="number" step="1" min="1" valid={this.state.pageSize}/>
+                        <Input className="item-count-input" type="number" step="1" min="1" value={this.state.pageSize}/>
                     </InputGroup>
                 </PaginationItem>
                 <PaginationItem>
