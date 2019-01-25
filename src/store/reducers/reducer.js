@@ -4,14 +4,14 @@ import {
     FETCH_BREED_LIST_REQUEST,
     RECEIVE_BREED_LIST,
     CHANGE_CURRENT_PAGE,
-    CHANGE_ITEM_COUNT
+    CHANGE_PAGE_SIZE
 } from '../actions/actions';
 
 const initialState = {
     breedList: [],
     isRequestPending: false,
     currentPage: 0,
-    itemCount: 20
+    pageSize: 20
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -33,9 +33,9 @@ export default function rootReducer(state = initialState, action) {
                 currentPage: action.currentPage
             });
 
-        case CHANGE_ITEM_COUNT:
+        case CHANGE_PAGE_SIZE:
             return Object.assign({}, state, {
-                itemCount: state.itemCount
+                pageSize: action.pageSize
             });
         
         default:

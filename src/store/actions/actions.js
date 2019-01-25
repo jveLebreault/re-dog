@@ -16,11 +16,10 @@ export const FETCH_BREED_LIST_REQUEST = 'FETCH_BREED_LIST_REQUEST';
 export function fetchBreedList(){
 
     return function (dispatch, getState) {
-        const {currentPage, itemCount} = getState();
-
+        const {currentPage, pageSize} = getState();
         return fetch(`${DOG_API_URL}breeds`, HEADERS)
             .then(response => response.json(), errorLogger)
-            .then(json => fetchImagesForCurrentPage(json, currentPage, itemCount))
+            .then(json => fetchImagesForCurrentPage(json, currentPage, pageSize))
             .then(json => dispatch(receiveBreedList(json)))
     }
 }
@@ -45,21 +44,20 @@ export function changeCurrentPage(currentPage = 0) {
     }
 }
 
-export const CHANGE_ITEM_COUNT = 'CHANGE_ITEM_COUNT';
+export const CHANGE_PAGE_SIZE = 'CHANGE_PAGE_SIZE';
 
-export function changeItemCount(itemCount = 20) {
+export function changePageSize(pageSize = 20) {
     return {
-        type: CHANGE_ITEM_COUNT,
-        itemCount
+        type: CHANGE_PAGE_SIZE,
+        pageSize
     }
 }
 
 export const FETCH_IMAGES_FOR_CURRENT_PAGE = 'FETCH_IMAGES_FOR_CURRENT_PAGE';
 
-export function fetchImagesForCurrentPage(breedList, currentPage, itemCount) {
-    const startIndex = currentPage * itemCount;
-    const endIndex = (currentPage + 1) * itemCount;
-
+export function fetchImagesForCurrentPage(breedList, currentPage, pageSize) {
+    const startIndex = currentPage * pageSize;
+    const endIndex = (currentPage + 1) * pageSize;
     const promiseList = [];
 
     for (let i = startIndex; i < endIndex; i++) {
@@ -67,7 +65,7 @@ export function fetchImagesForCurrentPage(breedList, currentPage, itemCount) {
         promiseList.push(fetch(`${DOG_API_URL}images/search?breed_id=${breedId}&limit=1`, HEADERS))
     }
     return Promise.all(promiseList)
-            .then(results => results.map(response => response.json()))
+            .then(results => results.map(response => response.json()), errorLogger)
             .then(jsonResults => Promise.all(jsonResults))
             .then(breedImages => {
                 for (let i = startIndex, j = 0; i < endIndex; i++, j++) {

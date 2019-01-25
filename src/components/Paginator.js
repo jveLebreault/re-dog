@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { 
     Pagination, 
     PaginationItem, 
@@ -10,27 +11,37 @@ import {
 
 export default class Paginator extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            pageSize: props.pageSize
-        };
-    }
-
     render() {
         return (
             <Pagination aria-label="Page navigation">
                 <PaginationItem>
-                    <PaginationLink previous/>
+                    <PaginationLink>
+                        <FontAwesomeIcon icon="angle-double-left"/>
+                    </PaginationLink>
                 </PaginationItem>
+
                 <PaginationItem>
-                    <InputGroup >
-                        <Input className="item-count-input" type="number" step="1" min="1" value={this.state.pageSize}/>
-                    </InputGroup>
+                    <PaginationLink>
+                        <FontAwesomeIcon icon="angle-left"/>
+                    </PaginationLink>
                 </PaginationItem>
+
+                {/* <PaginationItem>
+                    <PaginationLink>
+
+                    </PaginationLink>
+                </PaginationItem> */}
+
                 <PaginationItem>
-                    <PaginationLink next/>
+                    <PaginationLink>
+                            <FontAwesomeIcon icon="angle-right"/>
+                        </PaginationLink>
+                </PaginationItem>
+
+                <PaginationItem>
+                    <PaginationLink>
+                        <FontAwesomeIcon icon="angle-double-right"/>
+                    </PaginationLink>
                 </PaginationItem>
             </Pagination>
         );

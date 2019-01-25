@@ -6,14 +6,14 @@ import { Row, Col } from 'reactstrap';
 import { 
     fetchBreedList, 
     changeCurrentPage,
-    changeItemCount
+    changePageSize
 } from '../store/actions/actions';
 
 const mapStateToProps = (state, {location}) => {
     return {
         breedList: state.breedList,
         isRequestPending: state.isRequestPending,
-        itemCount: state.itemCount,
+        pageSize: state.pageSize,
         currentPage: state.currentPage,
         location
     }
@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchBreeds: () => dispatch(fetchBreedList()),
         changePage: (toPage) => dispatch(changeCurrentPage(toPage)),
-        changeItemCount: (itemCount) => dispatch(changeItemCount(itemCount))
+        changePageSize: (pageSize) => dispatch(changePageSize(pageSize))
     }
 }
 
@@ -31,17 +31,28 @@ const mapDispatchToProps = dispatch => {
 class BreedList extends React.Component {
 
     componentDidMount() {
+        const params = new URLSearchParams(this.props.location.search);
+
+        const pageParam = Number(params.get('page')) - 1;
+        const pageSizeParam = Number(params.get('page_size'));
+
+        if (pageParam != this.props.currentPage) {
+            this.props.changePage(pageParam);
+        }
+        if (pageSizeParam != this.props.pageSize) {
+            this.props.changePageSize(pageSizeParam);
+        }
+
         this.props.fetchBreeds();
     }
 
     getCurrentSlice() {
-        const { currentPage, itemCount } = this.props
-        return this.props.breedList.slice(currentPage * itemCount, (currentPage + 1) * itemCount);
+        const { currentPage, pageSize } = this.props
+        return this.props.breedList.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
     }
 
 
     render() {
-        console.log('THESE PROPS', this.props.location);
         return (
             <React.Fragment>
                 <Row>
@@ -56,7 +67,7 @@ class BreedList extends React.Component {
 
                 <Row>
                     <Col xs={{size: 5, offset: 5}}>
-                        <Paginator pageSize={this.props.itemCount}/>
+                        <Paginator currentPage={this.props.currentPage} pageSize={this.props.pageSize} itemCount={this.props.breedList.length}/>
                     </Col>
                 </Row>
             </React.Fragment>

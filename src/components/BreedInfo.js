@@ -15,6 +15,12 @@ import {
 
 export default class BreedInfo extends React.Component {
 
+    getTemperamentBadges() {
+        return this.props.breedInfo.temperament.split(',').map(
+            trait => <Badge key={trait} color="secondary">{trait}</Badge>
+        )
+    }
+
     render() {
         const { breedInfo } = this.props;
         return (
@@ -23,7 +29,7 @@ export default class BreedInfo extends React.Component {
                 <CardBody>
                     <CardTitle><strong>{breedInfo.name}</strong></CardTitle>
                     <strong>Bred for:</strong> {breedInfo.bred_for} <br/>
-                    <strong>Temperament:</strong> {breedInfo.temperament.split(',').map(trait => <Badge key={trait} color="secondary">{trait}</Badge>)}
+                    <strong>Temperament:</strong> {breedInfo.temperament ? this.getTemperamentBadges() : null}
                 </CardBody>
             </Card>
         );

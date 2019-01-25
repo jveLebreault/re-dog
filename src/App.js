@@ -11,12 +11,18 @@ import {
 } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { 
+    faSearch, 
+    faAngleDoubleLeft, 
+    faAngleDoubleRight, 
+    faAngleRight, 
+    faAngleLeft 
+} from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import 'typeface-roboto';
 
-library.add(faSearch);
+library.add(faSearch, faAngleDoubleLeft, faAngleDoubleRight, faAngleRight, faAngleLeft);
 
 class App extends Component {
 
@@ -28,7 +34,7 @@ class App extends Component {
                     <NavMenu/>
                     <Container>
                         <Switch>
-                            <Redirect exact from="/" to={{pathname: '/breeds', search: '?page=1&item_count=20'}}/>
+                            <Redirect exact from="/" to={{pathname: '/breeds', search: '?page=1&page_size=20'}}/>
                             <Route path="/breeds" component={BreedList}/>
                         </Switch>
                     </Container>
