@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import placeholder from './images/dog-placeholder.jpg';
+import { Link } from 'react-router-dom';
+import TemperamentBadge from './TemperamentBadge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
     Badge,
@@ -17,7 +19,7 @@ export default class BreedInfo extends React.Component {
 
     getTemperamentBadges() {
         return this.props.breedInfo.temperament.split(',').map(
-            trait => <Badge key={trait} color="secondary">{trait}</Badge>
+            trait => <TemperamentBadge key={trait} path={`/trait/${trait}`} color="secondary">{trait}</TemperamentBadge>
         )
     }
 
@@ -30,6 +32,7 @@ export default class BreedInfo extends React.Component {
                     <CardTitle><strong>{breedInfo.name}</strong></CardTitle>
                     <strong>Bred for:</strong> {breedInfo.bred_for} <br/>
                     <strong>Temperament:</strong> {breedInfo.temperament ? this.getTemperamentBadges() : null}
+                    <Link to={`/breed/${breedInfo.id}`}>View more</Link>
                 </CardBody>
             </Card>
         );
