@@ -4,26 +4,28 @@ import Paginator from './Paginator';
 import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
 import { 
-    fetchBreedList, 
-    changeCurrentPage,
-    changePageSize
+    fetchBreedList,                                            
+    navigateToPage
 } from '../store/actions/actions';
 
 const mapStateToProps = (state, {location}) => {
+    const params = new URLSearchParams(location.search);
+
+    const currentPage = Number(params.get('page')) ? Number(params.get('page')) : 1;
+    const pageSize = Number(params.get('page_size')) ? Number(params.get('page_size')) : 20;
+
     return {
         breedList: state.breedList,
         isRequestPending: state.isRequestPending,
-        pageSize: state.pageSize,
-        currentPage: state.currentPage,
-        location
+        currentPage,
+        pageSize
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchBreeds: () => dispatch(fetchBreedList()),
-        changePage: (toPage) => dispatch(changeCurrentPage(toPage)),
-        changePageSize: (pageSize) => dispatch(changePageSize(pageSize))
+        fetchBreeds: (currentPage = 0, pageSize = 20) => dispatch(fetchBreedList(currentPage, pageSize)),
+        navigateToPage: (toPage, pageSize) => dispatch(navigateToPage(toPage, pageSize)),
     }
 }
 
@@ -31,24 +33,27 @@ const mapDispatchToProps = dispatch => {
 class BreedList extends React.Component {
 
     componentDidMount() {
-        const params = new URLSearchParams(this.props.location.search);
+        const {currentPage, pageSize} = this.props;
+        this.props.fetchBreeds(currentPage - 1, pageSize);
 
-        const pageParam = Number(params.get('page')) - 1;
-        const pageSizeParam = Number(params.get('page_size'));
-
-        if (pageParam != this.props.currentPage) {
-            this.props.changePage(pageParam);
+        if(!this.props.location.search) {
+            this.props.history.replace({
+                pathname: this.props.location.pathname,
+                search: `?page=${currentPage}&page_size=${pageSize}`
+            });
         }
-        if (pageSizeParam != this.props.pageSize) {
-            this.props.changePageSize(pageSizeParam);
-        }
+    }
 
-        this.props.fetchBreeds();
+    componentDidUpdate({location}) {
+        if (location != this.props.location) {
+            const {currentPage, pageSize} = this.props;
+            this.props.navigateToPage(currentPage -1, pageSize);
+        }
     }
 
     getCurrentSlice() {
         const { currentPage, pageSize } = this.props
-        return this.props.breedList.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
+        return this.props.breedList.slice((currentPage - 1) * pageSize, currentPage * pageSize);
     }
 
 
