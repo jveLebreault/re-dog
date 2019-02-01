@@ -8,6 +8,7 @@ import {
     navigateToPage
 } from '../store/actions/actions';
 
+
 const mapStateToProps = (state, {location}) => {
     const params = new URLSearchParams(location.search);
 
@@ -21,6 +22,7 @@ const mapStateToProps = (state, {location}) => {
         pageSize
     }
 }
+
 
 const mapDispatchToProps = dispatch => {
     return {

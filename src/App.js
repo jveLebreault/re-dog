@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BreedList from './components/BreedList';
 import NavMenu from './components/NavMenu';
+import BreedDetails from './components/BreedDetails';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { 
@@ -36,6 +37,7 @@ class App extends Component {
                         <Switch>
                             <Redirect exact from="/" to={{pathname: '/breeds', search: '?page=1&page_size=20'}}/>
                             <Route path="/breeds" component={BreedList}/>
+                            <Route path="/breed/:breedId" component={BreedDetails}/>
                         </Switch>
                     </Container>
                 </React.Fragment>
