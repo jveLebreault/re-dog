@@ -18,3 +18,7 @@
 .item-count-input.form-control {
     width: 100px;
 }
+
+.badge>a {
+    color: white;
+}
