@@ -22,3 +22,15 @@
 .badge>a {
     color: white;
 }
+
+.info-color {
+    color: #007bff;
+}
+
+.btn-outline-primary {
+    border-color: #007bff;
+}
+
+.table th {
+    vertical-align: middle;
+}
