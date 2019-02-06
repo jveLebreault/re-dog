@@ -10,17 +10,27 @@ const errorLogger = (error) => console.log(error)
 
 const DOG_API_URL = 'https://api.TheDogAPI.com/v1/';
 
+export const FETCH_BREEDS = 'FETCH_BREEDS';
 
-export const FETCH_BREED_LIST_REQUEST = 'FETCH_BREED_LIST_REQUEST';
-
-export function fetchBreedList(currentPage, pageSize){
+export function fetchBreeds() {
     return function (dispatch) {
         return fetch(`${DOG_API_URL}breeds`, HEADERS)
             .then(response => response.json(), errorLogger)
-            .then(json => fetchImagesForCurrentPage(json, currentPage, pageSize))
             .then(json => dispatch(receiveBreedList(json)))
     }
 }
+
+
+// export const FETCH_BREED_LIST_REQUEST = 'FETCH_BREED_LIST_REQUEST';
+
+// export function fetchBreedList(currentPage, pageSize){
+//     return function (dispatch) {
+//         return fetch(`${DOG_API_URL}breeds`, HEADERS)
+//             .then(response => response.json(), errorLogger)
+//             .then(json => fetchImagesForCurrentPage(json, currentPage, pageSize))
+//             .then(json => dispatch(receiveBreedList(json)))
+//     }
+// }
 
 
 export const RECEIVE_BREED_LIST = 'RECEIVE_BREED_LIST';

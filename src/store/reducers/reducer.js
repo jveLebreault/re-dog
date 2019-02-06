@@ -2,6 +2,7 @@
 
 import {
     FETCH_BREED_LIST_REQUEST,
+    FETCH_BREEDS,
     RECEIVE_BREED_LIST,
 } from '../actions/actions';
 
@@ -13,7 +14,7 @@ const initialState = {
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
 
-        case FETCH_BREED_LIST_REQUEST:
+        case FETCH_BREEDS:
             return Object.assign({}, state, {
                 isRequestPending: true
             });

@@ -1,10 +1,9 @@
 import React from 'react';
-import BreedInfo from './BreedInfo';
-import Paginator from './Paginator';
 import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
+import BreedInfo from './BreedInfo';
+import Paginator from './Paginator';
 import { 
-    fetchBreedList,                                            
     navigateToPage
 } from '../store/actions/actions';
 
@@ -26,7 +25,6 @@ const mapStateToProps = (state, {location}) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchBreeds: (currentPage = 0, pageSize = 20) => dispatch(fetchBreedList(currentPage, pageSize)),
         navigateToPage: (toPage, pageSize) => dispatch(navigateToPage(toPage, pageSize)),
     }
 }
@@ -34,21 +32,10 @@ const mapDispatchToProps = dispatch => {
 
 class BreedList extends React.Component {
 
-    componentDidMount() {
-        const {currentPage, pageSize} = this.props;
-        this.props.fetchBreeds(currentPage - 1, pageSize);
-
-        if(!this.props.location.search) {
-            this.props.history.replace({
-                pathname: this.props.location.pathname,
-                search: `?page=${currentPage}&page_size=${pageSize}`
-            });
-        }
-    }
-
     componentDidUpdate({location}) {
+        const {currentPage, pageSize} = this.props;
+
         if (location != this.props.location) {
-            const {currentPage, pageSize} = this.props;
             this.props.navigateToPage(currentPage -1, pageSize);
         }
     }
@@ -65,7 +52,7 @@ class BreedList extends React.Component {
                 <Row>
                     {this.getCurrentSlice().map(breed => 
                         (
-                            <Col key={breed.id} xs="3">
+                            <Col key={breed.id} xs="6" md="4" lg="3">
                                 <BreedInfo breedInfo={breed}/>
                             </Col>
                         )
@@ -74,7 +61,10 @@ class BreedList extends React.Component {
 
                 <Row>
                     <Col xs={{size: 5, offset: 5}}>
-                        <Paginator currentPage={this.props.currentPage} pageSize={this.props.pageSize} itemCount={this.props.breedList.length}/>
+                        <Paginator 
+                            currentPage={this.props.currentPage} 
+                            pageSize={this.props.pageSize} 
+                            itemCount={this.props.breedList.length}/>
                     </Col>
                 </Row>
             </React.Fragment>
