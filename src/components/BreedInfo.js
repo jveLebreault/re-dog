@@ -32,7 +32,10 @@ export default class BreedInfo extends React.Component {
 
     getTemperamentBadges() {
         return this.props.breedInfo.temperament.split(',').map(
-            trait => <TemperamentBadge key={trait} path={`/trait/${trait}`} color="secondary">{trait}</TemperamentBadge>
+            trait => {
+                trait = trait.trim();
+                return <TemperamentBadge key={trait} path={`/trait/${trait}`} color="secondary">{trait}</TemperamentBadge>
+            }
         )
     }
 
